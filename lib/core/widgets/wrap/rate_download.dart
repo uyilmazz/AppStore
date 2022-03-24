@@ -1,7 +1,6 @@
-import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
-
 import '../../constant/color_constant.dart';
+import '../../extension/context_extension.dart';
 
 class RateDownloadWrap extends StatelessWidget {
   final String? text;
@@ -20,9 +19,7 @@ class RateDownloadWrap extends StatelessWidget {
       children: [
         Wrap(
           children: [
-            Text(text ?? '',
-                style:
-                    context.textTheme.subtitle1!.copyWith(color: Colors.white)),
+            Text(text ?? '', style: context.textTheme.subtitle1!),
             icon != null
                 ? Icon(icon, color: Colors.white, size: context.height * 0.02)
                 : const SizedBox(),

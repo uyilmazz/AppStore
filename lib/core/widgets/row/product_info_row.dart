@@ -5,7 +5,7 @@ import '../../../view/product/model/product.dart';
 import '../../../view/product/view/product_detail.dart';
 import '../../constant/color_constant.dart';
 import '../clipRRect/custom_product_profile.dart';
-import '../text/rate_size_text.dart';
+import '../text/custom_fitted_box.dart';
 
 class ProductInfoRow extends StatelessWidget {
   final Product product;
@@ -49,9 +49,7 @@ class ProductInfoRow extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProductDetail(
-                      product: product,
-                    )));
+                builder: (context) => ProductDetail(product: product)));
       },
       child: ProductProfileImage(imageUrl: product.images?[0]),
     );
@@ -81,11 +79,9 @@ class ProductInfoRow extends StatelessWidget {
   FittedBox buildProductNameText(BuildContext context) {
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: Text(
-        product.name ?? '',
-        style: context.textTheme.subtitle1!
-            .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-      ),
+      child: Text(product.name ?? '',
+          style: context.textTheme.subtitle1!
+              .copyWith(fontWeight: FontWeight.w500)),
     );
   }
 

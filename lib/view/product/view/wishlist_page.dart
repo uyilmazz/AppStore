@@ -1,8 +1,8 @@
+import '../../user/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 import '../../../core/base/view/base_widget.dart';
 import '../../../core/extension/context_extension.dart';
-import '../../../core/extension/string_extension.dart';
 import '../../../core/widgets/container/whislist_product.dart';
-import '../../../core/widgets/text/rate_size_text.dart';
 import '../service/product_service.dart';
 import '../view_model/product_view_model.dart';
 import 'package:dio/dio.dart';
@@ -18,7 +18,7 @@ class WishListPage extends StatelessWidget {
     return BaseView<ProductViewModel>(
         viewModel: ProductViewModel(ProductService(Dio())),
         onModelReady: (model) {
-          model.getProduct();
+          model.getWishList(context.read<UserViewModel>().user!.id.toString());
         },
         onPageBuilder: (context, viewModel) => Scaffold(
               body: Padding(
@@ -34,14 +34,13 @@ class WishListPage extends StatelessWidget {
                       child: Observer(
                           builder: (context) => !viewModel.isLoading
                               ? ListView.builder(
-                                  itemCount: viewModel.products.length,
+                                  itemCount: viewModel.wishList.length,
                                   itemBuilder: ((context, index) {
                                     return WishListProduct(
-                                        product: viewModel.products[index]);
+                                        product: viewModel.wishList[index]);
                                   }))
                               : const Center(
-                                  child: CircularProgressIndicator(),
-                                )),
+                                  child: CircularProgressIndicator())),
                     ),
                   ],
                 ),
@@ -58,8 +57,7 @@ class WishListPage extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             }),
-        Text('WishList',
-            style: context.textTheme.headline5!.copyWith(color: Colors.white)),
+        Text('WishList', style: context.textTheme.headline5),
       ],
     );
   }

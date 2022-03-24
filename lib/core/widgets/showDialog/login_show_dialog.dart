@@ -1,6 +1,5 @@
-import 'package:app_store/core/extension/context_extension.dart';
+import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
-
 import '../button/login_button.dart';
 
 class LoginShowDialog extends StatelessWidget {

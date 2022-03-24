@@ -40,6 +40,21 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
     });
   }
 
+  final _$wishListAtom = Atom(name: '_ProductViewModelBase.wishList');
+
+  @override
+  List<Product> get wishList {
+    _$wishListAtom.reportRead();
+    return super.wishList;
+  }
+
+  @override
+  set wishList(List<Product> value) {
+    _$wishListAtom.reportWrite(value, super.wishList, () {
+      super.wishList = value;
+    });
+  }
+
   final _$tabBarIndexAtom = Atom(name: '_ProductViewModelBase.tabBarIndex');
 
   @override
@@ -122,6 +137,14 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
     return _$getProductAsyncAction.run(() => super.getProduct());
   }
 
+  final _$getWishListAsyncAction =
+      AsyncAction('_ProductViewModelBase.getWishList');
+
+  @override
+  Future<void> getWishList(String userId) {
+    return _$getWishListAsyncAction.run(() => super.getWishList(userId));
+  }
+
   final _$getUpdatedAsyncAction =
       AsyncAction('_ProductViewModelBase.getUpdated');
 
@@ -152,10 +175,22 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
   }
 
   @override
+  void changeLoading() {
+    final _$actionInfo = _$_ProductViewModelBaseActionController.startAction(
+        name: '_ProductViewModelBase.changeLoading');
+    try {
+      return super.changeLoading();
+    } finally {
+      _$_ProductViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 products: ${products},
 updatedProduct: ${updatedProduct},
+wishList: ${wishList},
 tabBarIndex: ${tabBarIndex},
 productTypes: ${productTypes},
 trends: ${trends},

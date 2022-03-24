@@ -1,9 +1,9 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import '../../../core/enum/network_enum.dart';
 import '../model/product.dart';
 import '../model/type.dart';
 import 'IProduct_service.dart';
-import 'package:dio/src/dio.dart';
 
 class ProductService extends IProductService {
   ProductService(Dio dio) : super(dio);
@@ -28,7 +28,6 @@ class ProductService extends IProductService {
     final response = await dio.get('$_baseUrl${NetworkPath.MAIN.rawValue}',
         queryParameters: Map.fromEntries([]));
     if (response.statusCode == HttpStatus.ok) {
-      print(response.data);
       final data = List<Map<String, dynamic>>.from(response.data);
       List<Product> products = data.map((e) => Product.fromJson(e)).toList();
       return products;
@@ -55,6 +54,17 @@ class ProductService extends IProductService {
         queryParameters:
             Map.fromEntries([NetworkQueryParameters.TYPE.rawValue(typeId)]));
     if (response.statusCode == HttpStatus.ok) {
+      final data = List<Map<String, dynamic>>.from(response.data);
+      List<Product> products = data.map((e) => Product.fromJson(e)).toList();
+      return products;
+    }
+    return null;
+  }
+
+  @override
+  Future<List<Product>?> getWishList(String userId) async {
+    final response = await dio.get('$_baseUrl/products/wishList/$userId');
+    if (response.statusCode == 200) {
       final data = List<Map<String, dynamic>>.from(response.data);
       List<Product> products = data.map((e) => Product.fromJson(e)).toList();
       return products;

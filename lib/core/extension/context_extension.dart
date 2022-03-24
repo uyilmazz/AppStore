@@ -15,33 +15,6 @@ extension ContextExtension on BuildContext {
   double get highValue => height * 0.1;
 }
 
-extension PaddingExtension on BuildContext {
-  EdgeInsets get lowPadding => EdgeInsets.all(lowValue);
-  EdgeInsets get normalPadding => EdgeInsets.all(normalValue);
-  EdgeInsets get mediumPadding => EdgeInsets.all(mediumValue);
-  EdgeInsets get highPadding => EdgeInsets.all(highValue);
-
-  EdgeInsets get verticalLowPadding => EdgeInsets.symmetric(vertical: lowValue);
-  EdgeInsets get verticalNormalPadding =>
-      EdgeInsets.symmetric(vertical: normalValue);
-  EdgeInsets get verticalMediumPadding =>
-      EdgeInsets.symmetric(vertical: mediumValue);
-  EdgeInsets get verticalHighPadding =>
-      EdgeInsets.symmetric(vertical: highValue);
-
-  EdgeInsets get horizontalLowPadding =>
-      EdgeInsets.symmetric(horizontal: lowValue);
-  EdgeInsets get horizontalNormalPadding =>
-      EdgeInsets.symmetric(horizontal: normalValue);
-  EdgeInsets get horizontalMediumPadding =>
-      EdgeInsets.symmetric(horizontal: mediumValue);
-  EdgeInsets get horizontalHighPadding =>
-      EdgeInsets.symmetric(horizontal: highValue);
-
-  EdgeInsets get pagePadding =>
-      EdgeInsets.symmetric(horizontal: normalValue, vertical: normalValue * 2);
-}
-
 extension PageColorExtension on BuildContext {
   Color get randomColor => Colors.primaries[Random().nextInt(17)];
 }

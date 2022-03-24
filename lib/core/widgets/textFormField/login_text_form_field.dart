@@ -1,18 +1,17 @@
-import 'package:app_store/core/extension/context_extension.dart';
+import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
-
 import '../../constant/color_constant.dart';
 
 class LoginTextFormField extends StatelessWidget {
   final String hintText;
   final IconData leadingIcon;
-  bool obscure;
-  TextEditingController? controller;
-  String? Function(String? value)? validator;
-  IconData? suffixIcon;
-  Function()? onTap;
+  final bool obscure;
+  final TextEditingController? controller;
+  final String? Function(String? value)? validator;
+  final IconData? suffixIcon;
+  final Function()? onTap;
 
-  LoginTextFormField(
+  const LoginTextFormField(
       {Key? key,
       required this.hintText,
       required this.leadingIcon,

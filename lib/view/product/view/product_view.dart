@@ -1,10 +1,10 @@
-import 'dart:ui';
+import 'package:app_store/core/constant/color_constant.dart';
 
-import 'package:app_store/core/constant/menu_items.dart';
-import 'package:app_store/core/extension/string_extension.dart';
-import 'package:app_store/core/widgets/listtile/drawer_menu_item.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-
+import '../../../core/extension/string_extension.dart';
+import '../../../core/widgets/listtile/drawer_menu_item.dart';
+import '../../user/view/login_page.dart';
+import '../../user/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 import '../../../core/base/view/base_widget.dart';
 import '../../../core/extension/context_extension.dart';
 import '../../../core/widgets/button/icon_button.dart';
@@ -120,10 +120,22 @@ class ProductView extends StatelessWidget {
                   iconName: 'wishlist',
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => WishListPage()));
+                        builder: (context) => const WishListPage()));
                   }),
               const CustomListTile(text: 'Payment', iconName: 'payment'),
               const CustomListTile(text: 'Setting', iconName: 'setting'),
+              CustomListTile(
+                  text: 'Logout',
+                  icon: Icons.logout,
+                  iconName: 'Logout',
+                  onTap: () async {
+                    context.read<UserViewModel>().logout();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                        (route) => false);
+                  }),
+              // const CustomListTile(text: 'Logout', iconName: 'logout'),
             ],
           )),
     );
@@ -158,17 +170,12 @@ class ProductView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          text,
-          style: context.textTheme.headline6!.copyWith(color: Colors.white),
-        ),
+        Text(text,
+            style: context.textTheme.headline6!.copyWith(color: Colors.white)),
         IconButton(
             onPressed: onPressed,
-            icon: Icon(
-              Icons.arrow_forward_outlined,
-              size: context.mediumValue,
-              color: Colors.white,
-            ))
+            icon: Icon(Icons.arrow_forward_outlined,
+                size: context.mediumValue, color: Colors.white))
       ],
     );
   }
@@ -189,7 +196,7 @@ class ProductView extends StatelessWidget {
                   EdgeInsets.symmetric(horizontal: context.lowValue * 0.8),
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(context.normalValue),
-                color: Color(0xFF0061FD),
+                color: ColorContants.buttonColor,
               ),
               tabs: viewModel.productTypes
                   .map((type) => Tab(text: type.name))
@@ -211,8 +218,8 @@ class ProductView extends StatelessWidget {
             CustomIconButton(
                 icon: Icons.notifications_none,
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => WishListPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const WishListPage()));
                 },
                 alignment: Alignment.centerRight),
             CustomIconButton(

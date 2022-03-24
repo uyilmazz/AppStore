@@ -1,15 +1,16 @@
-import 'package:app_store/core/base/view/base_provider_widget.dart';
-import 'package:app_store/core/constant/color_constant.dart';
-import 'package:app_store/core/constant/image_contants.dart';
-import 'package:app_store/core/extension/context_extension.dart';
-import 'package:app_store/core/extension/string_extension.dart';
-import 'package:app_store/core/widgets/showDialog/login_show_dialog.dart';
-import 'package:app_store/view/product/view/product_view.dart';
-import 'package:app_store/view/user/view_model/user_view_model.dart';
+import '../../../core/base/view/base_provider_widget.dart';
+import '../../../core/constant/color_constant.dart';
+import '../../../core/constant/image_contants.dart';
+import '../../../core/extension/context_extension.dart';
+import '../../../core/extension/string_extension.dart';
+import '../../../core/widgets/showDialog/login_show_dialog.dart';
+import '../../product/view/product_view.dart';
+import '../service/user_service.dart';
+import '../view_model/user_view_model.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/widgets/button/login_button.dart';
 import '../../../core/widgets/button/login_menu_button.dart';
 import '../../../core/widgets/divider/login_divider.dart';
@@ -21,7 +22,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseProviderView<UserViewModel>(
-        viewModel: UserViewModel(),
+        viewModel: UserViewModel(userService: UserService(Dio())),
         onModelReady: (provider) {
           provider.setContext(context);
           provider.init();

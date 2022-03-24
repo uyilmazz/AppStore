@@ -1,5 +1,5 @@
-import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
+import '../../extension/context_extension.dart';
 
 class HeadTextIcon extends StatelessWidget {
   final String text;
@@ -12,10 +12,7 @@ class HeadTextIcon extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          text,
-          style: context.textTheme.headline6!.copyWith(color: Colors.white),
-        ),
+        Text(text, style: context.textTheme.headline6),
         IconButton(
             onPressed: onPressed,
             icon: Icon(

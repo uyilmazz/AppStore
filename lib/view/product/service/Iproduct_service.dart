@@ -1,6 +1,5 @@
-import '../model/product.dart';
 import 'package:dio/dio.dart';
-
+import '../model/product.dart';
 import '../model/type.dart';
 
 abstract class IProductService {
@@ -12,4 +11,5 @@ abstract class IProductService {
   Future<List<Product>?> getProduct();
   Future<List<Product>?> getTrends(String typeId);
   Future<List<Product>?> getUpdated(String typeId);
+  Future<List<Product>?> getWishList(String userId);
 }

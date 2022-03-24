@@ -1,9 +1,7 @@
 extension StringExtension on String {
   String get toPng => 'assets/$this.png';
   String get fortniteToPng => 'assets/fortnite/$this.png';
-
   String get toIconPng => 'assets/icon/$this.png';
-
   String networkUrl() {
     return 'http://10.0.2.2:3000/$this';
   }

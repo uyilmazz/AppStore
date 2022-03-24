@@ -1,4 +1,4 @@
-import 'package:app_store/core/extension/context_extension.dart';
+import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

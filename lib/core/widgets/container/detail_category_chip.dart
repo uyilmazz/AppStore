@@ -15,16 +15,6 @@ class DetailCategoryContainer extends StatelessWidget {
         decoration: BoxDecoration(
             color: ColorContants.buttonColor,
             borderRadius: BorderRadius.circular(context.lowValue * 0.5)),
-        child: Text(
-          categoryName,
-          style: context.textTheme.subtitle2!.copyWith(color: Colors.white),
-        ));
+        child: Text(categoryName, style: context.textTheme.subtitle2!));
   }
 }
-
-
-// Text(
-//                             e.name ?? '',
-//                             style: context.textTheme.subtitle2!
-//                                 .copyWith(color: Colors.white),
-//                           )

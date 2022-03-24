@@ -2,6 +2,7 @@ import '../service/product_service.dart';
 import 'package:mobx/mobx.dart';
 import '../model/product.dart';
 import '../model/type.dart';
+
 part 'product_view_model.g.dart';
 
 class ProductViewModel = _ProductViewModelBase with _$ProductViewModel;
@@ -17,6 +18,9 @@ abstract class _ProductViewModelBase with Store {
   List<Product> updatedProduct = [];
 
   @observable
+  List<Product> wishList = [];
+
+  @observable
   int tabBarIndex = 0;
 
   @observable
@@ -30,9 +34,7 @@ abstract class _ProductViewModelBase with Store {
 
   @action
   Future<void> init() async {
-    print('init');
     changeLoading();
-
     await getTypes();
     await getUpdated();
     await getTrends();
@@ -58,6 +60,11 @@ abstract class _ProductViewModelBase with Store {
   }
 
   @action
+  Future<void> getWishList(String userId) async {
+    wishList = await _productService.getWishList(userId) ?? [];
+  }
+
+  @action
   Future<void> getUpdated() async {
     updatedProduct = await _productService
             .getUpdated(productTypes[tabBarIndex].id.toString()) ??
@@ -71,6 +78,7 @@ abstract class _ProductViewModelBase with Store {
     trends = response ?? [];
   }
 
+  @action
   void changeLoading() {
     isLoading = !isLoading;
   }

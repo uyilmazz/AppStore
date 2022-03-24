@@ -1,6 +1,6 @@
-import 'package:app_store/core/constant/color_constant.dart';
-import 'package:app_store/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
+import '../../constant/color_constant.dart';
+import '../../extension/context_extension.dart';
 
 class LoginDivider extends StatelessWidget {
   const LoginDivider({Key? key}) : super(key: key);

@@ -1,5 +1,6 @@
+import '../../user/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constant/color_constant.dart';
-import '../../../core/constant/image_contants.dart';
 import '../../../core/extension/context_extension.dart';
 import '../../../core/extension/string_extension.dart';
 import '../../../core/widgets/container/detail_category_chip.dart';
@@ -18,6 +19,7 @@ class ProductDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<UserViewModel>().isFavoriteControl(product.id!);
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -178,28 +180,37 @@ class ProductDetail extends StatelessWidget {
             : Image.network(product.images![1].networkUrl(), fit: BoxFit.fill));
   }
 
-  Row buildAppBar(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CustomIconButton(
-            icon: Icons.arrow_back,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        Wrap(
-          children: [
-            CustomIconButton(
-                icon: Icons.favorite,
-                onPressed: () {},
-                alignment: Alignment.centerRight),
-            CustomIconButton(
-                icon: Icons.more_vert,
-                onPressed: () {},
-                alignment: Alignment.centerRight),
-          ],
-        )
-      ],
-    );
-  }
+  Widget buildAppBar(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomIconButton(
+              icon: Icons.arrow_back,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          Wrap(
+            children: [
+              IconButton(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    context
+                        .read<UserViewModel>()
+                        .addWishListProduct(product.id!);
+                  },
+                  icon: Icon(
+                    Icons.favorite,
+                    color: context.watch<UserViewModel>().isFavorite
+                        ? Colors.red
+                        : Colors.white,
+                    size: context.mediumValue * 0.8,
+                  )),
+              CustomIconButton(
+                  icon: Icons.more_vert,
+                  onPressed: () {},
+                  alignment: Alignment.centerRight),
+            ],
+          )
+        ],
+      );
 }

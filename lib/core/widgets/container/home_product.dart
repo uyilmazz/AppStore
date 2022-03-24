@@ -1,14 +1,10 @@
-import '../../constant/color_constant.dart';
-import '../../extension/context_extension.dart';
-import '../../extension/string_extension.dart';
-import '../clipRRect/custom_product_profile.dart';
-import '../row/product_info_row.dart';
-import '../../../view/product/view/product_detail.dart';
-import '../../../view/product/view_model/product_view_model.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import '../../../view/product/model/product.dart';
-import '../text/rate_size_text.dart';
+import '../../../view/product/view/product_detail.dart';
+import '../../../view/product/view_model/product_view_model.dart';
+import '../../extension/context_extension.dart';
+import '../clipRRect/custom_product_profile.dart';
+import '../row/product_info_row.dart';
 
 class GamesContainer extends StatelessWidget {
   final Product product;
