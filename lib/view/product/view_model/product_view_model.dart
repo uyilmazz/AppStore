@@ -1,3 +1,5 @@
+import 'package:app_store/core/utility/throttle_helper.dart';
+
 import '../service/product_service.dart';
 import 'package:mobx/mobx.dart';
 import '../model/product.dart';
@@ -11,6 +13,8 @@ abstract class _ProductViewModelBase with Store {
   final ProductService _productService;
   _ProductViewModelBase(this._productService);
 
+  final ThrottleStringHelper _throttleStringHelper = ThrottleStringHelper();
+
   @observable
   List<Product> products = [];
 
@@ -20,6 +24,8 @@ abstract class _ProductViewModelBase with Store {
   @observable
   List<Product> wishList = [];
 
+  @observable
+  List<Product>? searchList;
   @observable
   int tabBarIndex = 0;
 
@@ -76,6 +82,20 @@ abstract class _ProductViewModelBase with Store {
     final response = await _productService
         .getTrends(productTypes[tabBarIndex].id.toString());
     trends = response ?? [];
+  }
+
+  @action
+  Future<void> getAllSearchQuery(String value) async {
+    _throttleStringHelper.onDelayTouch(value, (text) async {
+      final response = await _productService.getProductsSearchQuery(text ?? '');
+      searchList = response ?? [];
+      print(searchList);
+    });
+  }
+
+  @action
+  void searchListNull() {
+    searchList = null;
   }
 
   @action

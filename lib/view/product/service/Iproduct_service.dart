@@ -12,4 +12,5 @@ abstract class IProductService {
   Future<List<Product>?> getTrends(String typeId);
   Future<List<Product>?> getUpdated(String typeId);
   Future<List<Product>?> getWishList(String userId);
+  Future<List<Product>?> getProductsSearchQuery(String queryText);
 }

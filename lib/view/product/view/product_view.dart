@@ -1,14 +1,10 @@
 import 'package:app_store/core/constant/color_constant.dart';
-
-import '../../../core/extension/string_extension.dart';
-import '../../../core/widgets/listtile/drawer_menu_item.dart';
-import '../../user/view/login_page.dart';
-import '../../user/view_model/user_view_model.dart';
-import 'package:provider/provider.dart';
+import 'package:app_store/core/widgets/drawer/end_drawer.dart';
 import '../../../core/base/view/base_widget.dart';
 import '../../../core/extension/context_extension.dart';
 import '../../../core/widgets/button/icon_button.dart';
 import '../../../core/widgets/container/home_trend.dart';
+import '../../../core/widgets/drawer/drawer.dart';
 import 'wishlist_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +25,9 @@ class ProductView extends StatelessWidget {
         model.init();
       },
       onPageBuilder: (context, viewModel) => Scaffold(
-        drawer: buildDrawer(context),
+        resizeToAvoidBottomInset: false,
+        drawer: const CustomDrawer(),
+        endDrawer: const CustomEndDrawer(),
         body: Observer(
             builder: (context) => viewModel.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -65,79 +63,6 @@ class ProductView extends StatelessWidget {
                     ),
                   )),
       ),
-    );
-  }
-
-  SizedBox buildDrawer(BuildContext context) {
-    return SizedBox(
-      width: context.width * 0.7,
-      child: Drawer(
-          backgroundColor: Color(0xFF141414),
-          child: Column(
-            children: [
-              SizedBox(height: context.mediumValue * 2),
-              Padding(
-                padding: EdgeInsets.only(left: context.normalValue),
-                child: Row(
-                  children: [
-                    Image(
-                        fit: BoxFit.fill,
-                        width: context.width * 0.15,
-                        height: context.height * 0.08,
-                        image: AssetImage('detail_fortnite'.toPng)),
-                    SizedBox(width: context.normalValue),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Name Surname',
-                            style: context.textTheme.subtitle1!
-                                .copyWith(color: Colors.white),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'name_surname@gmail.com',
-                            style: context.textTheme.labelMedium!
-                                .copyWith(color: Colors.white),
-                            overflow: TextOverflow.ellipsis,
-                            // maxLines: 1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: context.normalValue),
-              const CustomListTile(text: 'My Library', iconName: 'library'),
-              const CustomListTile(
-                  text: 'Notification', iconName: 'notification'),
-              const CustomListTile(
-                  text: 'Subscription', iconName: 'subscription'),
-              CustomListTile(
-                  text: 'Wishlist',
-                  iconName: 'wishlist',
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const WishListPage()));
-                  }),
-              const CustomListTile(text: 'Payment', iconName: 'payment'),
-              const CustomListTile(text: 'Setting', iconName: 'setting'),
-              CustomListTile(
-                  text: 'Logout',
-                  icon: Icons.logout,
-                  iconName: 'Logout',
-                  onTap: () async {
-                    context.read<UserViewModel>().logout();
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                        (route) => false);
-                  }),
-              // const CustomListTile(text: 'Logout', iconName: 'logout'),
-            ],
-          )),
     );
   }
 
@@ -224,7 +149,9 @@ class ProductView extends StatelessWidget {
                 alignment: Alignment.centerRight),
             CustomIconButton(
                 icon: Icons.search,
-                onPressed: () {},
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
                 alignment: Alignment.centerRight),
           ],
         )

@@ -55,6 +55,21 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
     });
   }
 
+  final _$searchListAtom = Atom(name: '_ProductViewModelBase.searchList');
+
+  @override
+  List<Product>? get searchList {
+    _$searchListAtom.reportRead();
+    return super.searchList;
+  }
+
+  @override
+  set searchList(List<Product>? value) {
+    _$searchListAtom.reportWrite(value, super.searchList, () {
+      super.searchList = value;
+    });
+  }
+
   final _$tabBarIndexAtom = Atom(name: '_ProductViewModelBase.tabBarIndex');
 
   @override
@@ -160,6 +175,15 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
     return _$getTrendsAsyncAction.run(() => super.getTrends());
   }
 
+  final _$getAllSearchQueryAsyncAction =
+      AsyncAction('_ProductViewModelBase.getAllSearchQuery');
+
+  @override
+  Future<void> getAllSearchQuery(String value) {
+    return _$getAllSearchQueryAsyncAction
+        .run(() => super.getAllSearchQuery(value));
+  }
+
   final _$_ProductViewModelBaseActionController =
       ActionController(name: '_ProductViewModelBase');
 
@@ -169,6 +193,17 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
         name: '_ProductViewModelBase.changeTabBar');
     try {
       return super.changeTabBar(value);
+    } finally {
+      _$_ProductViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void searchListNull() {
+    final _$actionInfo = _$_ProductViewModelBaseActionController.startAction(
+        name: '_ProductViewModelBase.searchListNull');
+    try {
+      return super.searchListNull();
     } finally {
       _$_ProductViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -191,6 +226,7 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
 products: ${products},
 updatedProduct: ${updatedProduct},
 wishList: ${wishList},
+searchList: ${searchList},
 tabBarIndex: ${tabBarIndex},
 productTypes: ${productTypes},
 trends: ${trends},

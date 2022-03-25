@@ -71,4 +71,15 @@ class ProductService extends IProductService {
     }
     return null;
   }
+
+  Future<List<Product>?> getProductsSearchQuery(String queryText) async {
+    final response = await dio.get('$_baseUrl${NetworkPath.MAIN.rawValue}',
+        queryParameters: Map.fromEntries([MapEntry('search', queryText)]));
+    if (response.statusCode == 200) {
+      final data = List<Map<String, dynamic>>.from(response.data);
+      List<Product> products = data.map((e) => Product.fromJson(e)).toList();
+      return products;
+    }
+    return null;
+  }
 }
