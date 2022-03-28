@@ -8,7 +8,6 @@ import 'package:app_store/view/product/view_model/product_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../../constant/color_constant.dart';
 import '../../constant/items.dart';
 import '../row/product_info_row.dart';
 
@@ -28,32 +27,30 @@ class CustomEndDrawer extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
                 child: Drawer(
                     backgroundColor: const Color(0xFF141414).withAlpha(37),
-                    child: Observer(
-                        builder: (context) =>
-                            buildContentColumn(context, viewModel))),
+                    child: buildContentColumn(context, viewModel)),
               ),
             ));
   }
 
-  Column buildContentColumn(BuildContext context, ProductViewModel viewModel) {
-    return Column(
-      children: [
-        SizedBox(height: context.mediumValue * 2),
-        buildSearchTextField(context, viewModel),
-        SizedBox(height: context.normalValue * 1.2),
-        viewModel.searchList == null
-            ? Column(
+  Widget buildContentColumn(BuildContext context, ProductViewModel viewModel) =>
+      Observer(
+          builder: (context) => Column(
                 children: [
-                  buildRowHistoryHead(context),
-                  buildWrapHistoryElements(context)
+                  SizedBox(height: context.mediumValue * 2),
+                  buildSearchTextField(context, viewModel),
+                  SizedBox(height: context.normalValue * 1.2),
+                  viewModel.searchList == null
+                      ? Column(
+                          children: [
+                            buildRowHistoryHead(context),
+                            buildWrapHistoryElements(context)
+                          ],
+                        )
+                      : viewModel.searchList!.isEmpty
+                          ? const Text('Not Found content')
+                          : Expanded(child: buildSearchProduct(viewModel))
                 ],
-              )
-            : viewModel.searchList!.isEmpty
-                ? const Text('Not Found content')
-                : Expanded(child: buildSearchProduct(viewModel))
-      ],
-    );
-  }
+              ));
 
   ListView buildSearchProduct(ProductViewModel viewModel) {
     return ListView.builder(
@@ -99,9 +96,7 @@ class CustomEndDrawer extends StatelessWidget {
   Widget buildSearchTextField(
       BuildContext context, ProductViewModel viewModel) {
     return HistorySearchField(onChanged: (value) {
-      value.trim().isNotEmpty
-          ? viewModel.getAllSearchQuery(value)
-          : viewModel.searchListNull();
+      viewModel.getAllSearchQuery(value);
     });
   }
 }

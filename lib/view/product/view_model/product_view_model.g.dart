@@ -199,17 +199,6 @@ mixin _$ProductViewModel on _ProductViewModelBase, Store {
   }
 
   @override
-  void searchListNull() {
-    final _$actionInfo = _$_ProductViewModelBaseActionController.startAction(
-        name: '_ProductViewModelBase.searchListNull');
-    try {
-      return super.searchListNull();
-    } finally {
-      _$_ProductViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void changeLoading() {
     final _$actionInfo = _$_ProductViewModelBaseActionController.startAction(
         name: '_ProductViewModelBase.changeLoading');
