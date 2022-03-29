@@ -1,16 +1,22 @@
-# app_store
+# App-Store
+https://ui8.net/soumya-bharati/products/dark-app-store-ui-design (ui design)
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p float="left">
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648474235.png?raw=true" width="30%" />
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648474241.png?raw=true" width="30%" /> 
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648474261.png?raw=true" width="30%" />
+  </p>
+ <p float="left">
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560883.png?raw=true" width="30%" /> 
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560892.png?raw=true" width="30%" />
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560904.png?raw=true" width="30%" /> 
+  </p>
+ <p float="left">
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560909.png?raw=true" width="30%" />
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560914.png?raw=true" width="30%" />
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560955.png?raw=true" width="30%" />
+  </p>
+ <p float="left">
+  <img src="https://github.com/uyilmazz/AppStore/blob/main/screenshots/Screenshot_1648560961.png?raw=true" width="30%" />
+</p>
