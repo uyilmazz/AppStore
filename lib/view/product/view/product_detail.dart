@@ -32,6 +32,15 @@ class ProductDetail extends StatelessWidget {
     );
   }
 
+  SizedBox buildBackImage(BuildContext context) {
+    return SizedBox(
+        height: context.height * 0.3,
+        width: double.infinity,
+        child: product.images?[1] == null
+            ? Image.asset('background'.toPng, fit: BoxFit.fill)
+            : Image.network(product.images![1].networkUrl(), fit: BoxFit.fill));
+  }
+
   Padding buildProductDetail(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -44,7 +53,7 @@ class ProductDetail extends StatelessWidget {
           SizedBox(height: context.height * 0.04),
           buildRateSizeDownloadRow(context),
           SizedBox(height: context.height * 0.04),
-          Expanded(child: buildImagePageView(context)),
+          Expanded(child: buildPageView(context)),
           SizedBox(height: context.height * 0.01),
           HeadTextIcon(text: 'Description', onPressed: () {}),
           buildDescription(context),
@@ -66,51 +75,37 @@ class ProductDetail extends StatelessWidget {
     );
   }
 
-  SizedBox buildImagePageView(BuildContext context) {
-    return SizedBox(
-      height: context.height * 0.25,
-      child: (product.images!.length - 2) > 0
-          ? PageView.builder(
-              itemCount: (product.images!.length - 2),
-              itemBuilder: (context, index) {
-                return DetailPageViewImage(
-                  imageName: product.images![index + 2],
-                  productName: product.name!,
-                );
-              })
-          : const Center(
-              child: Text('The app has no image.'),
-            ),
-    );
-  }
-
-  SizedBox buildDescription(BuildContext context) {
-    return SizedBox(
-        width: double.infinity,
-        height: context.height * 0.07,
-        child: Text(product.description ?? '',
-            style: context.textTheme.labelLarge!
-                .copyWith(color: ColorContants.textColor)));
-  }
-
-  Row buildRateSizeDownloadRow(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        RateDownloadWrap(
-            value: '1M review',
-            text: '${product.rate ?? 0} ',
-            icon: Icons.star),
-        const CustomDivider(),
-        RateDownloadWrap(
-            value: '${product.size ?? 0} GB',
-            icon: Icons.cloud_download_outlined),
-        const CustomDivider(),
-        RateDownloadWrap(
-            value: 'Downloads', text: '${product.downloadCount ?? 0}'),
-      ],
-    );
-  }
+  Widget buildAppBar(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomIconButton(
+              icon: Icons.arrow_back,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          Wrap(
+            children: [
+              IconButton(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    context
+                        .read<UserViewModel>()
+                        .addWishListProduct(product.id!);
+                  },
+                  icon: Icon(Icons.favorite,
+                      color: context.watch<UserViewModel>().isFavorite
+                          ? Colors.red
+                          : Colors.white,
+                      size: context.mediumValue * 0.8)),
+              CustomIconButton(
+                  icon: Icons.more_vert,
+                  onPressed: () {},
+                  alignment: Alignment.centerRight)
+            ],
+          )
+        ],
+      );
 
   Row buildImageInstallRow(BuildContext context) {
     return Row(
@@ -120,24 +115,6 @@ class ProductDetail extends StatelessWidget {
         Expanded(flex: 3, child: buildProdutcInfoColumn(context)),
         SizedBox(width: context.width * 0.04),
         buildInstallButton()
-      ],
-    );
-  }
-
-  Column buildProdutcInfoColumn(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AutoSizeText('${product.name}',
-            maxLines: 2,
-            style: context.textTheme.headline5!.copyWith(color: Colors.white)),
-        SizedBox(height: context.lowValue),
-        Text('Producer',
-            style: context.textTheme.labelLarge!
-                .copyWith(color: ColorContants.buttonColor)),
-        Text('In-app purchase',
-            style: context.textTheme.labelLarge!
-                .copyWith(color: ColorContants.textColor))
       ],
     );
   }
@@ -163,6 +140,24 @@ class ProductDetail extends StatelessWidget {
     );
   }
 
+  Column buildProdutcInfoColumn(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AutoSizeText('${product.name}',
+            maxLines: 2,
+            style: context.textTheme.headline5!.copyWith(color: Colors.white)),
+        SizedBox(height: context.lowValue),
+        Text('Producer',
+            style: context.textTheme.labelLarge!
+                .copyWith(color: ColorContants.buttonColor)),
+        Text('In-app purchase',
+            style: context.textTheme.labelLarge!
+                .copyWith(color: ColorContants.textColor))
+      ],
+    );
+  }
+
   ElevatedButton buildInstallButton() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -171,46 +166,49 @@ class ProductDetail extends StatelessWidget {
         child: const Text('Install'));
   }
 
-  SizedBox buildBackImage(BuildContext context) {
-    return SizedBox(
-        height: context.height * 0.3,
-        width: double.infinity,
-        child: product.images?[1] == null
-            ? Image.asset('background'.toPng, fit: BoxFit.fill)
-            : Image.network(product.images![1].networkUrl(), fit: BoxFit.fill));
+  Row buildRateSizeDownloadRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        RateDownloadWrap(
+            value: '1M review',
+            text: '${product.rate ?? 0} ',
+            icon: Icons.star),
+        const CustomDivider(),
+        RateDownloadWrap(
+            value: '${product.size ?? 0} GB',
+            icon: Icons.cloud_download_outlined),
+        const CustomDivider(),
+        RateDownloadWrap(
+            value: 'Downloads', text: '${product.downloadCount ?? 0}'),
+      ],
+    );
   }
 
-  Widget buildAppBar(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomIconButton(
-              icon: Icons.arrow_back,
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          Wrap(
-            children: [
-              IconButton(
-                  alignment: Alignment.centerRight,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    context
-                        .read<UserViewModel>()
-                        .addWishListProduct(product.id!);
-                  },
-                  icon: Icon(
-                    Icons.favorite,
-                    color: context.watch<UserViewModel>().isFavorite
-                        ? Colors.red
-                        : Colors.white,
-                    size: context.mediumValue * 0.8,
-                  )),
-              CustomIconButton(
-                  icon: Icons.more_vert,
-                  onPressed: () {},
-                  alignment: Alignment.centerRight),
-            ],
-          )
-        ],
-      );
+  SizedBox buildPageView(BuildContext context) {
+    return SizedBox(
+      height: context.height * 0.25,
+      child: (product.images!.length - 2) > 0
+          ? PageView.builder(
+              itemCount: (product.images!.length - 2),
+              itemBuilder: (context, index) {
+                return DetailPageViewImage(
+                  imageName: product.images![index + 2],
+                  productName: product.name!,
+                );
+              })
+          : const Center(
+              child: Text('The app has no image.'),
+            ),
+    );
+  }
+
+  SizedBox buildDescription(BuildContext context) {
+    return SizedBox(
+        width: double.infinity,
+        height: context.height * 0.07,
+        child: Text(product.description ?? '',
+            style: context.textTheme.labelLarge!
+                .copyWith(color: ColorContants.textColor)));
+  }
 }

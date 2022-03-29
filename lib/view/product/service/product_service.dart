@@ -25,7 +25,8 @@ class ProductService extends IProductService {
 
   @override
   Future<List<Product>?> getProduct() async {
-    final response = await dio.get('$_baseUrl${NetworkPath.MAIN.rawValue}',
+    final response = await dio.get(
+        '$_baseUrl${NetworkProductPath.MAIN.rawValue}',
         queryParameters: Map.fromEntries([]));
     if (response.statusCode == HttpStatus.ok) {
       final data = List<Map<String, dynamic>>.from(response.data);
@@ -37,7 +38,8 @@ class ProductService extends IProductService {
 
   @override
   Future<List<Product>?> getTrends(String typeId) async {
-    final response = await dio.get('$_baseUrl${NetworkPath.TREND.rawValue}',
+    final response = await dio.get(
+        '$_baseUrl${NetworkProductPath.TREND.rawValue}',
         queryParameters:
             Map.fromEntries([NetworkQueryParameters.TYPE.rawValue(typeId)]));
     if (response.statusCode == HttpStatus.ok) {
@@ -50,7 +52,8 @@ class ProductService extends IProductService {
 
   @override
   Future<List<Product>?> getUpdated(String typeId) async {
-    final response = await dio.get('$_baseUrl${NetworkPath.UPDATED.rawValue}',
+    final response = await dio.get(
+        '$_baseUrl${NetworkProductPath.UPDATED.rawValue}',
         queryParameters:
             Map.fromEntries([NetworkQueryParameters.TYPE.rawValue(typeId)]));
     if (response.statusCode == HttpStatus.ok) {
@@ -63,7 +66,8 @@ class ProductService extends IProductService {
 
   @override
   Future<List<Product>?> getWishList(String userId) async {
-    final response = await dio.get('$_baseUrl/products/wishList/$userId');
+    final response = await dio
+        .get('$_baseUrl${NetworkProductPath.WISHLIST.rawValue}/$userId');
     if (response.statusCode == 200) {
       final data = List<Map<String, dynamic>>.from(response.data);
       List<Product> products = data.map((e) => Product.fromJson(e)).toList();
@@ -72,8 +76,10 @@ class ProductService extends IProductService {
     return null;
   }
 
+  @override
   Future<List<Product>?> getProductsSearchQuery(String queryText) async {
-    final response = await dio.get('$_baseUrl${NetworkPath.MAIN.rawValue}',
+    final response = await dio.get(
+        '$_baseUrl${NetworkProductPath.MAIN.rawValue}',
         queryParameters: Map.fromEntries([MapEntry('search', queryText)]));
     if (response.statusCode == 200) {
       final data = List<Map<String, dynamic>>.from(response.data);

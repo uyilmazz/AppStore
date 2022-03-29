@@ -1,17 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../../core/base/model/base_view_model.dart';
-import '../service/user_service.dart';
 import '../model/user.dart';
+import '../service/Iuser_service.dart';
+import '../service/user_service.dart';
 
 class UserViewModel extends ChangeNotifier with BaseViewModel {
-  final UserService userService;
-  UserViewModel({required this.userService});
-
-  GlobalKey<FormState> formKey = GlobalKey();
-  TextEditingController? nameController;
-  TextEditingController? emailController;
-  TextEditingController? passwordController;
-  TextEditingController? confirmPasswordController;
+  final IUserService userService = UserService(Dio());
 
   User? user;
   bool isLoading = true;
@@ -23,12 +18,7 @@ class UserViewModel extends ChangeNotifier with BaseViewModel {
   void setContext(BuildContext context) => this.context = context;
 
   @override
-  void init() {
-    nameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
-  }
+  void init() {}
 
   void isLoadingChange() {
     isLoading = !isLoading;
@@ -40,9 +30,8 @@ class UserViewModel extends ChangeNotifier with BaseViewModel {
     notifyListeners();
   }
 
-  Future<bool> registerUser() async {
-    final response = await userService.registerUser(
-        nameController!.text, emailController!.text, passwordController!.text);
+  Future<bool> registerUser(String name, String email, String password) async {
+    final response = await userService.registerUser(name, email, password);
     if (response != null) {
       user = response;
       notifyListeners();
@@ -52,16 +41,18 @@ class UserViewModel extends ChangeNotifier with BaseViewModel {
     return false;
   }
 
-  Future<bool> loginUser() async {
-    final response = await userService.loginUser(
-        emailController!.text, passwordController!.text);
+  Future<bool> loginUser(String email, String password) async {
+    final response = await userService.loginUser(email, password);
     if (response != null) {
-      user = response;
+      User _user = User();
+      _user = response;
+      user = _user;
       notifyListeners();
       return true;
+    } else {
+      notifyListeners();
+      return false;
     }
-    notifyListeners();
-    return false;
   }
 
   Future<void> verifyToken() async {
@@ -74,8 +65,9 @@ class UserViewModel extends ChangeNotifier with BaseViewModel {
       isVerified = false;
     }
     final endTime = DateTime.now().millisecondsSinceEpoch;
-    if (endTime - startTime < 2500) {
-      await Future.delayed(Duration(milliseconds: ((endTime - startTime))));
+    if (endTime - startTime < 4000) {
+      await Future.delayed(
+          Duration(milliseconds: (4000 - (endTime - startTime))));
     }
     isLoadingChange();
     notifyListeners();

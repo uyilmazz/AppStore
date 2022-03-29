@@ -4,6 +4,5 @@ class ImageConstants {
   ImageConstants._init();
 
   String get loginSvg => toSvg('login');
-
   String toSvg(String name) => 'assets/svg/$name.svg';
 }

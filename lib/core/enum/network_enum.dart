@@ -1,15 +1,34 @@
-enum NetworkPath { MAIN, TREND, UPDATED }
+enum NetworkProductPath { MAIN, TREND, UPDATED, WISHLIST }
+enum NetworkUserPath { MAIN, LOGIN, REGISTER, VERIFYTOKEN }
 enum NetworkQueryParameters { PRODUCER, CATEGORY, TYPE }
+enum Token { KEY }
 
-extension NetworkPathExtension on NetworkPath {
+extension NetworkProductPathExtension on NetworkProductPath {
   String get rawValue {
     switch (this) {
-      case NetworkPath.MAIN:
+      case NetworkProductPath.MAIN:
         return '/products';
-      case NetworkPath.TREND:
+      case NetworkProductPath.TREND:
         return '/products/trends';
-      case NetworkPath.UPDATED:
+      case NetworkProductPath.UPDATED:
         return '/products/updated';
+      case NetworkProductPath.WISHLIST:
+        return '/products/wishList';
+    }
+  }
+}
+
+extension NetworkUserPathExtension on NetworkUserPath {
+  String get rawValue {
+    switch (this) {
+      case NetworkUserPath.MAIN:
+        return '/users';
+      case NetworkUserPath.LOGIN:
+        return '/users/login';
+      case NetworkUserPath.REGISTER:
+        return '/users/register';
+      case NetworkUserPath.VERIFYTOKEN:
+        return '/users/verify';
     }
   }
 }
@@ -23,6 +42,15 @@ extension NetworkQueryExtension on NetworkQueryParameters {
         return MapEntry('category', value);
       case NetworkQueryParameters.TYPE:
         return MapEntry('typeId', value);
+    }
+  }
+}
+
+extension TokenExtension on Token {
+  String get rawValue {
+    switch (this) {
+      case Token.KEY:
+        return 'token';
     }
   }
 }

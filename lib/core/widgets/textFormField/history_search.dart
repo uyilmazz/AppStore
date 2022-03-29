@@ -1,6 +1,5 @@
-import 'package:app_store/core/extension/context_extension.dart';
+import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
-
 import '../../constant/color_constant.dart';
 
 class HistorySearchField extends StatelessWidget {
@@ -12,17 +11,22 @@ class HistorySearchField extends StatelessWidget {
     return SizedBox(
       height: context.height * 0.055,
       child: TextField(
+        cursorColor: ColorContants.secondaryColor,
         onChanged: onChanged,
         style: context.textTheme.labelMedium!.copyWith(
             color: ColorContants.textColor, fontWeight: FontWeight.w600),
         decoration: InputDecoration(
             filled: true,
-            fillColor: const Color(0xFF2F2F2F),
+            fillColor: ColorContants.chipColor,
             isDense: true,
             contentPadding: EdgeInsets.only(right: context.normalValue),
             enabledBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: ColorContants.secondaryColor),
                 borderRadius: BorderRadius.circular(context.mediumValue)),
             focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: ColorContants.secondaryColor),
                 borderRadius: BorderRadius.circular(context.mediumValue)),
             prefixIcon: Icon(Icons.search,
                 color: ColorContants.textColor,

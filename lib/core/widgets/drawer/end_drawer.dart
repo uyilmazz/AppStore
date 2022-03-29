@@ -1,10 +1,11 @@
 import 'dart:ui';
-import 'package:app_store/core/base/view/base_widget.dart';
-import 'package:app_store/core/extension/context_extension.dart';
-import 'package:app_store/core/widgets/chip/history_element_chip.dart';
-import 'package:app_store/core/widgets/textFormField/history_search.dart';
-import 'package:app_store/view/product/service/product_service.dart';
-import 'package:app_store/view/product/view_model/product_view_model.dart';
+import '../../base/view/base_widget.dart';
+import '../../constant/color_constant.dart';
+import '../../extension/context_extension.dart';
+import '../chip/history_element_chip.dart';
+import '../textFormField/history_search.dart';
+import '../../../view/product/service/product_service.dart';
+import '../../../view/product/view_model/product_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -20,14 +21,33 @@ class CustomEndDrawer extends StatelessWidget {
         viewModel: ProductViewModel(ProductService(Dio())),
         onModelReady: (model) {},
         onPageBuilder: (context, viewModel) => Container(
-              padding: EdgeInsets.symmetric(horizontal: context.lowValue),
+              width: context.width * 0.65,
               height: double.infinity,
-              width: context.width * 0.7,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
-                child: Drawer(
-                    backgroundColor: const Color(0xFF141414).withAlpha(37),
-                    child: buildContentColumn(context, viewModel)),
+              decoration: BoxDecoration(
+                color: ColorContants.drawerColor.withOpacity(0.37),
+              ),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    child: ClipRRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 40.0, sigmaY: 20.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              Colors.grey.withOpacity(0.15),
+                              Colors.white.withOpacity(0.15),
+                            ]),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: context.lowValue),
+                      child: buildContentColumn(context, viewModel))
+                ],
               ),
             ));
   }
@@ -52,16 +72,26 @@ class CustomEndDrawer extends StatelessWidget {
                 ],
               ));
 
-  ListView buildSearchProduct(ProductViewModel viewModel) {
-    return ListView.builder(
-        itemCount: viewModel.searchList!.length,
-        itemBuilder: (context, index) {
-          return Container(
-              margin: EdgeInsets.only(bottom: context.normalValue),
-              height: context.height * 0.08,
-              width: context.width * 0.65,
-              child: ProductInfoRow(product: viewModel.searchList![index]));
-        });
+  Widget buildSearchTextField(
+      BuildContext context, ProductViewModel viewModel) {
+    return HistorySearchField(onChanged: (value) async {
+      await viewModel.getAllSearchQuery(value);
+    });
+  }
+
+  Row buildRowHistoryHead(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('History',
+            style: context.textTheme.subtitle1!
+                .copyWith(fontWeight: FontWeight.w500)),
+        IconButton(
+            onPressed: null,
+            icon: Icon(Icons.close,
+                size: context.normalValue * 1.5, color: Colors.white))
+      ],
+    );
   }
 
   Wrap buildWrapHistoryElements(BuildContext context) {
@@ -75,28 +105,15 @@ class CustomEndDrawer extends StatelessWidget {
     );
   }
 
-  Row buildRowHistoryHead(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('History',
-            style: context.textTheme.subtitle1!
-                .copyWith(fontWeight: FontWeight.w500)),
-        IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.close,
-              size: context.normalValue * 1.5,
-              color: Colors.white,
-            ))
-      ],
-    );
-  }
-
-  Widget buildSearchTextField(
-      BuildContext context, ProductViewModel viewModel) {
-    return HistorySearchField(onChanged: (value) {
-      viewModel.getAllSearchQuery(value);
-    });
+  ListView buildSearchProduct(ProductViewModel viewModel) {
+    return ListView.builder(
+        itemCount: viewModel.searchList!.length,
+        itemBuilder: (context, index) {
+          return Container(
+              margin: EdgeInsets.only(bottom: context.normalValue),
+              height: context.height * 0.08,
+              width: context.width * 0.65,
+              child: ProductInfoRow(product: viewModel.searchList![index]));
+        });
   }
 }
