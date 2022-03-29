@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import '../../constant/color_constant.dart';
 import '../../extension/context_extension.dart';
-import 'package:flutter/material.dart';
 
 class DetailCategoryContainer extends StatelessWidget {
   final String categoryName;

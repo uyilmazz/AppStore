@@ -1,6 +1,5 @@
-import 'package:app_store/core/extension/context_extension.dart';
+import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
-
 import '../../constant/color_constant.dart';
 
 class HistoryElementChip extends StatelessWidget {
@@ -14,12 +13,12 @@ class HistoryElementChip extends StatelessWidget {
         visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2),
         padding: EdgeInsets.symmetric(
             vertical: 0, horizontal: context.lowValue * 0.5),
-        backgroundColor: const Color(0xFF2F2F2F),
+        backgroundColor: ColorContants.chipColor,
         elevation: 2,
         labelStyle: context.textTheme.labelLarge!.copyWith(
             color: ColorContants.textColor, fontWeight: FontWeight.w600),
         shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Color(0xFF2F2F2F)),
+            side: const BorderSide(color: ColorContants.chipColor),
             borderRadius: BorderRadius.circular(context.lowValue * 1.2)),
         label: Text(labelText));
   }

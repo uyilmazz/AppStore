@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
 import '../../../core/base/model/base_model.dart';
 
 part "product.g.dart";

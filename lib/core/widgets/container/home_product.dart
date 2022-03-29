@@ -22,10 +22,7 @@ class GamesContainer extends StatelessWidget {
         children: [
           Expanded(flex: 14, child: buildMainProductImage(context)),
           const Spacer(),
-          Expanded(
-            flex: 4,
-            child: ProductInfoRow(product: product),
-          )
+          Expanded(flex: 4, child: ProductInfoRow(product: product))
         ],
       ),
     );
@@ -37,9 +34,7 @@ class GamesContainer extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProductDetail(
-                      product: product,
-                    )));
+                builder: (context) => ProductDetail(product: product)));
       },
       child: ProductProfileImage(imageUrl: product.images?[0]),
     );

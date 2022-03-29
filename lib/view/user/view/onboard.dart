@@ -1,3 +1,5 @@
+import '../../../core/extension/string_extension.dart';
+import 'package:lottie/lottie.dart';
 import '../../../core/extension/context_extension.dart';
 import '../../product/view/product_view.dart';
 import 'login_page.dart';
@@ -15,9 +17,11 @@ class _OnBoardPageState extends State<OnBoardPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      Provider.of<UserViewModel>(context, listen: false).verifyToken();
-    });
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    await Provider.of<UserViewModel>(context, listen: false).verifyToken();
   }
 
   @override
@@ -26,7 +30,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
         ? Scaffold(
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: context.normalValue),
-              child: const Center(child: CircularProgressIndicator()),
+              child: Center(child: Lottie.asset('loading_lottie2'.toLottie)),
             ),
           )
         : context.read<UserViewModel>().isVerified

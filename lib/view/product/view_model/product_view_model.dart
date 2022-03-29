@@ -1,5 +1,4 @@
-import 'package:app_store/core/utility/throttle_helper.dart';
-
+import '../../../core/utility/throttle_helper.dart';
 import '../service/product_service.dart';
 import 'package:mobx/mobx.dart';
 import '../model/product.dart';
@@ -26,6 +25,7 @@ abstract class _ProductViewModelBase with Store {
 
   @observable
   List<Product>? searchList;
+
   @observable
   int tabBarIndex = 0;
 
@@ -87,15 +87,14 @@ abstract class _ProductViewModelBase with Store {
   @action
   Future<void> getAllSearchQuery(String value) async {
     _throttleStringHelper.onDelayTouch(value, (text) async {
-      final response = await _productService.getProductsSearchQuery(text ?? '');
-      searchList = response ?? [];
-      print(searchList);
-    });
-  }
+      if (text == null || text.trim().isEmpty) {
+        searchList = null;
+      } else {
+        final response = await _productService.getProductsSearchQuery(text);
 
-  @action
-  void searchListNull() {
-    searchList = null;
+        searchList = response ?? [];
+      }
+    });
   }
 
   @action

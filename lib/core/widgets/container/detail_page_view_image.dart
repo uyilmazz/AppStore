@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import '../../extension/context_extension.dart';
 import '../../extension/string_extension.dart';
-import 'package:flutter/material.dart';
 
 class DetailPageViewImage extends StatelessWidget {
   final String imageName;

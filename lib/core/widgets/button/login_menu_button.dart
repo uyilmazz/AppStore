@@ -1,8 +1,7 @@
-import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../view/user/view_model/user_view_model.dart';
+import '../../extension/context_extension.dart';
 
 class LoginMenuButton extends StatelessWidget {
   final String text;

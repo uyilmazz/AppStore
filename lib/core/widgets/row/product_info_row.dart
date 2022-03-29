@@ -1,8 +1,6 @@
 import '../../extension/context_extension.dart';
 import 'package:flutter/material.dart';
-
 import '../../../view/product/model/product.dart';
-import '../../../view/product/view/product_detail.dart';
 import '../../constant/color_constant.dart';
 import '../clipRRect/custom_product_profile.dart';
 import '../text/custom_fitted_box.dart';
@@ -43,16 +41,20 @@ class ProductInfoRow extends StatelessWidget {
     );
   }
 
-  GestureDetector buildMainProductImage(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProductDetail(product: product)));
-      },
-      child: ProductProfileImage(imageUrl: product.images?[0]),
+  FittedBox buildProductNameText(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(product.name ?? '',
+          style: context.textTheme.subtitle1!
+              .copyWith(fontWeight: FontWeight.w500)),
     );
+  }
+
+  Widget buildCategoryText(BuildContext context, int categoryItemNumber) {
+    return CustomFittedBox(
+        text: (product.category?[categoryItemNumber].name != null
+            ? '${categoryItemNumber == 0 ? '' : ' - '}${product.category?[categoryItemNumber].name}'
+            : ''));
   }
 
   Row builRateAndSizeRow(BuildContext context) {
@@ -74,21 +76,5 @@ class ProductInfoRow extends StatelessWidget {
                 '${product.size != null ? product.size!.toStringAsFixed(1) : 0} GB'),
       ],
     );
-  }
-
-  FittedBox buildProductNameText(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Text(product.name ?? '',
-          style: context.textTheme.subtitle1!
-              .copyWith(fontWeight: FontWeight.w500)),
-    );
-  }
-
-  Widget buildCategoryText(BuildContext context, int categoryItemNumber) {
-    return CustomFittedBox(
-        text: (product.category?[categoryItemNumber].name != null
-            ? '${categoryItemNumber == 0 ? '' : ' - '}${product.category?[categoryItemNumber].name}'
-            : ''));
   }
 }

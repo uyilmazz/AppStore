@@ -1,3 +1,4 @@
+import '../../../view/product/view/product_detail.dart';
 import 'package:flutter/material.dart';
 import '../../../view/product/model/product.dart';
 import '../../extension/context_extension.dart';
@@ -9,10 +10,16 @@ class WishListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: context.normalValue * 1.5),
-      height: context.height * 0.11,
-      child: ProductInfoRow(product: product, width: context.width * 0.24),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProductDetail(product: product)));
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: context.normalValue * 1.5),
+        height: context.height * 0.11,
+        child: ProductInfoRow(product: product, width: context.width * 0.24),
+      ),
     );
   }
 }

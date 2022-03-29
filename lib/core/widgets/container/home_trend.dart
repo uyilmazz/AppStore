@@ -26,9 +26,8 @@ class TrendContainer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProductDetail(
-                                  product: product,
-                                )));
+                            builder: (context) =>
+                                ProductDetail(product: product)));
                   },
                   child: ProductProfileImage(imageUrl: product.images?[0]))),
           SizedBox(height: context.lowValue),
